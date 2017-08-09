@@ -32,7 +32,13 @@ gulp.task('js', () => {
 gulp.task('handlebars', callback => {
 	// Files are automatically sorted so the tutorials will be ordered correctly
 	glob('./src/tutorials/*.yaml', {}, function (e, files) {
-		if (e) console.error('Error with glob: ' + e)
+		// Gracefully handle error
+		if (e) {
+			console.error('Error with glob: ' + e);
+			callback();
+			return;
+		}
+
 		tutorials = []
 
 		for (i in files) {
